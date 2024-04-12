@@ -9,7 +9,6 @@ import {
 } from "expo-location";
 import { useEffect, useRef, useState } from "react";
 import MapView, { Marker } from "react-native-maps";
-import { CarComponent } from "../../components/CarComponent";
 
 export function Home() {
   const [location, setLocation] = useState<LocationObject | null>(null);
@@ -36,6 +35,7 @@ export function Home() {
         distanceInterval: 1,
       },
       (response) => {
+        console.log(response)
         setLocation(response);
         mapRef.current?.animateCamera({ center: response.coords, zoom: 17 });
       }
@@ -47,6 +47,7 @@ export function Home() {
       {location && (
         <MapView
           ref={mapRef}
+          provider="google"
           style={styles.map}
           initialRegion={{
             latitude: location.coords.latitude,
@@ -61,11 +62,7 @@ export function Home() {
               latitude: location.coords.latitude,
               longitude: location.coords.longitude,
             }}
-          >
-
-            {/* <CarComponent heading={location.coords.heading ?? 1}/> */}
-
-          </Marker>
+          />
         </MapView>
       )}
     </View>
